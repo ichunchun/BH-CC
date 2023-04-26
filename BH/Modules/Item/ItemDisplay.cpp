@@ -274,7 +274,7 @@ void GetItemName(UnitItemInfo *uInfo, string &name) {
 }
 
 void SubstituteNameVariables(UnitItemInfo *uInfo, string &name, const string &action_name) {
-	char origName[128], sockets[4], code[4], ilvl[4], alvl[4], craft_alvl[4], runename[16] = "", runenum[4] = "0";
+	char origName[512], sockets[4], code[4], ilvl[4], alvl[4], craft_alvl[4], runename[160] = "", runenum[4] = "0";
 	char gemtype[16] = "", gemlevel[16] = "", sellValue[16] = "", statVal[16] = "";
 	char lvlreq[4], wpnspd[4], rangeadder[4];
 
@@ -305,7 +305,7 @@ void SubstituteNameVariables(UnitItemInfo *uInfo, string &name, const string &ac
 
 	if (IsRune(uInfo->attrs)) {
 		sprintf_s(runenum, "%d", RuneNumberFromItemCode(code));
-		sprintf_s(runename, name.substr(0, name.find(' ')).c_str());
+		sprintf_s(runename, name.c_str());  //by zyl，上面的runename长度从16改到160
 	} else if (IsGem(uInfo->attrs)) {
 		sprintf_s(gemlevel, "%s", GetGemLevelString(GetGemLevel(uInfo->attrs)));
 		sprintf_s(gemtype, "%s", GetGemTypeString(GetGemType(uInfo->attrs)));
