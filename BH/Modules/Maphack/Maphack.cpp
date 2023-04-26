@@ -1,4 +1,4 @@
-/* Maphack Module
+﻿/* Maphack Module
  *
  */
 #include "../../D2Ptrs.h"
@@ -440,6 +440,16 @@ void Maphack::OnDraw() {
 								while ((start_pos = itemName.find('\n', start_pos)) != std::string::npos) {
 									itemName.replace(start_pos, 1, " - ");
 									start_pos += 3;
+								}
+								//by zyl
+								for (int i = 0; i < 100; i++) {  //by zyl 这里解决名字里面有颜色的代码
+									int pos = itemName.find("ÿ");
+									if (pos >= 0) {
+										itemName = itemName.replace(pos, 1, "\377");
+									}
+									else {
+										break;
+									}
 								}
 								PrintText(ItemColorFromQuality(unit->pItemData->dwQuality), "%s", itemName.c_str());
 								if (!action.noTracking && !IsTown(GetPlayerArea()) && action.pingLevel <= Item::GetTrackerPingLevel()) {

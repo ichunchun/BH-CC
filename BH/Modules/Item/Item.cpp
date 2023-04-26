@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * Item.cpp
  * BH: Copyright 2011 (C) McGod
@@ -378,6 +378,15 @@ void __fastcall Item::ItemNamePatch(wchar_t *name, UnitAny *item)
 {
 	char* szName = UnicodeToAnsi(name);
 	string itemName = szName;
+	for (int i = 0; i < 100; i++) {  //by zyl 这里解决名字里面有颜色的代码
+		int pos = itemName.find("ÿ");
+		if (pos >= 0) {
+			itemName = itemName.replace(pos, 1, "\377");
+		}
+		else {
+			break;
+		}
+	}
 	char* code = D2COMMON_GetItemText(item->dwTxtFileNo)->szCode;
 
 	if (Toggles["Advanced Item Display"].state) {
@@ -409,6 +418,16 @@ void __fastcall Item::ItemNamePatch(wchar_t *name, UnitAny *item)
 	//itemName += " {" + test3 + "}";
 
 	MultiByteToWideChar(CODE_PAGE, MB_PRECOMPOSED, itemName.c_str(), itemName.length(), name, itemName.length());
+	for (DWORD i = 0; i < wcslen(name); i++)
+	{
+		if ((name[i] >= 0xFF || name[i] == 0x79) && name[i + 1] == L'c')
+		{
+			//if (name[i + 2] >= L'0' && name[i + 2] <= L':')
+			//{
+			name[i] = L'\377';
+			//}
+		};
+	}
 	name[itemName.length()] = 0;  // null-terminate the string since MultiByteToWideChar doesn't
 	delete[] szName;
 }
@@ -718,6 +737,17 @@ void __stdcall Item::OnProperties(wchar_t * wTxt)
 		string desc = item_desc_cache.Get(&uInfo);
 		if (desc != "") {
 			auto chars_written = MultiByteToWideChar(CODE_PAGE, MB_PRECOMPOSED, desc.c_str(), -1, wDesc, 128);
+			for (DWORD i = 0; i < wcslen(wDesc); i++)
+			{
+				if ((wDesc[i] >= 0xFF || wDesc[i] == 0x79) && wDesc[i + 1] == L'c')
+				{
+					//if (name[i + 2] >= L'0' && name[i + 2] <= L':')
+					//{
+					wDesc[i] = L'\377';
+					//}
+				};
+			}
+			int aLen = wcslen(wTxt);
 			swprintf_s(wTxt + aLen, MAXLEN - aLen,
 				L"%s%s\n",
 				(chars_written > 0) ? wDesc : L"\377c1 Descirption string too long!",

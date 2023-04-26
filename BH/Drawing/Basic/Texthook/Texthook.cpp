@@ -215,6 +215,18 @@ bool Texthook::Draw(unsigned int x, unsigned int y, int align, unsigned int font
 	//Convert multi-byte to wide character
 	wchar_t* wString = AnsiToUnicode(buffer);
 
+	//by zyl
+	for (DWORD i = 0; i < wcslen(wString); i++)
+	{
+		if ((wString[i] >= 0xFF || wString[i] == 0x79) && wString[i + 1] == L'c')
+		{
+			//if (name[i + 2] >= L'0' && name[i + 2] <= L':')
+			//{
+			wString[i] = L'\377';
+			//}
+		};
+	}
+
 	unsigned int properX = x;
 	if (align == Center)
 		x = x - (GetTextSize(buffer, font).x / 2);

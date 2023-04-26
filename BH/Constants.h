@@ -10,7 +10,7 @@
 
 
 //#define CODE_PAGE 1252 // windows-1252	ANSI Latin 1; Western European (Windows)
-#define CODE_PAGE 936 // windows-1252	让物品显示中文名字
+#define CODE_PAGE 936 // windows-936	让物品显示中文名字
 
 enum TextColor {
 	Disabled=-1,

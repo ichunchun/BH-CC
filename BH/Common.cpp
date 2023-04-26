@@ -133,6 +133,17 @@ void PrintText(DWORD Color, char *szText, ...) {
 	va_end(Args); 
 	wchar_t Buffer[0x130];
 	MultiByteToWideChar(CODE_PAGE, 1, szBuffer, 152, Buffer, 304);
+	//by zyl
+	for (DWORD i = 0; i < wcslen(Buffer); i++)
+	{
+		if ((Buffer[i] >= 0xFF || Buffer[i] == 0x79) && Buffer[i + 1] == L'c')
+		{
+			//if (name[i + 2] >= L'0' && name[i + 2] <= L':')
+			//{
+			Buffer[i] = L'\377';
+			//}
+		};
+	}
 	D2CLIENT_PrintGameString(Buffer, Color);	
 }
 
