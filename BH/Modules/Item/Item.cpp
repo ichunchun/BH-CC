@@ -191,63 +191,63 @@ void Item::ResetPatches() {
 }
 
 void Item::DrawSettings() {
-	settingsTab = new UITab("Item", BH::settingsUI);
+	settingsTab = new UITab("物品显示", BH::settingsUI);
 	int y = 10;
 	int keyhook_x = 230;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Show Ethereal"].state, "Show Ethereal");
+	new Checkhook(settingsTab, 4, y, &Toggles["Show Ethereal"].state, "显示ETH(无形)");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Show Ethereal"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Show Sockets"].state, "Show Sockets");
+	new Checkhook(settingsTab, 4, y, &Toggles["Show Sockets"].state, "显示孔数");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Show Sockets"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Show iLvl"].state, "Show iLvl");
+	new Checkhook(settingsTab, 4, y, &Toggles["Show iLvl"].state, "显示物品等级");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Show iLvl"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Show Rune Numbers"].state, "Show Rune #");
+	new Checkhook(settingsTab, 4, y, &Toggles["Show Rune Numbers"].state, "显示符文编号#");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Show Rune Numbers"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Alt Item Style"].state, "Alt Style");
+	new Checkhook(settingsTab, 4, y, &Toggles["Alt Item Style"].state, "Alt物品样式");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Alt Item Style"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Color Mod"].state, "Color Mod");
+	new Checkhook(settingsTab, 4, y, &Toggles["Color Mod"].state, "多彩模式");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Color Mod"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Shorten Item Names"].state, "Shorten Names");
+	new Checkhook(settingsTab, 4, y, &Toggles["Shorten Item Names"].state, "物品短名称");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Shorten Item Names"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Always Show Items"].state, "Always Show Items");
+	new Checkhook(settingsTab, 4, y, &Toggles["Always Show Items"].state, "永久显示物品");
 	new Keyhook(settingsTab, keyhook_x, y + 2, &Toggles["Always Show Items"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Always Show Item Stat Ranges"].state, "Always Show Item Stat Ranges");
+	new Checkhook(settingsTab, 4, y, &Toggles["Always Show Item Stat Ranges"].state, "显示物品变量");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Always Show Item Stat Ranges"].toggle, "");
 	y += 15;
 	
-	new Checkhook(settingsTab, 4, y, &Toggles["Advanced Item Display"].state, "Advanced Item Display");
+	new Checkhook(settingsTab, 4, y, &Toggles["Advanced Item Display"].state, "物品高级显示");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Advanced Item Display"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Item Drop Notifications"].state, "Item Drop Notifications");
+	new Checkhook(settingsTab, 4, y, &Toggles["Item Drop Notifications"].state, "物品掉落提示");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Item Drop Notifications"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Item Close Notifications"].state, "Item Close Notifications");
+	new Checkhook(settingsTab, 4, y, &Toggles["Item Close Notifications"].state, "物品接近提示");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Item Close Notifications"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Item Detailed Notifications"].state, "Item Detailed Notifications");
+	new Checkhook(settingsTab, 4, y, &Toggles["Item Detailed Notifications"].state, "物品明细提示");
 	new Keyhook(settingsTab, keyhook_x, y + 2, &Toggles["Item Detailed Notifications"].toggle, "");
 	y += 15;
 
-	new Checkhook(settingsTab, 4, y, &Toggles["Verbose Notifications"].state, "Verbose Notifications");
+	new Checkhook(settingsTab, 4, y, &Toggles["Verbose Notifications"].state, "提示更加丰富");
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Verbose Notifications"].toggle, "");
 	y += 15;
 
@@ -255,10 +255,10 @@ void Item::DrawSettings() {
 	new Keyhook(settingsTab, keyhook_x, y+2, &Toggles["Suppress Invalid Stats"].toggle, "");
 	y += 15;
 	
-	new Keyhook(settingsTab, 4, y+2, &showPlayer, "Show Player's Gear:   ");
+	new Keyhook(settingsTab, 4, y+2, &showPlayer, "显示其他玩家:   ");
 	y += 15;
 
-	new Texthook(settingsTab, 4, y, "Filter Level:");
+	new Texthook(settingsTab, 4, y, "过滤等级:");
 
 	vector<string> options;
 	options.push_back("0 - None");
@@ -267,7 +267,7 @@ void Item::DrawSettings() {
 	options.push_back("3 - Aggressive");
 	new Combohook(settingsTab, 85, y, 120, &filterLevelSetting, options);
 
-	new Texthook(settingsTab, 234, y, "Ping Tiers <=:");
+	new Texthook(settingsTab, 234, y, "提醒等级过滤 <=:");
 
 	vector<string> ping_options;
 	ping_options.push_back("0");

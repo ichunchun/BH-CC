@@ -245,77 +245,77 @@ void Maphack::OnLoad() {
 	ResetPatches();*/
 	diabloDeadMessage->Install();
 
-	settingsTab = new UITab("Maphack", BH::settingsUI);
+	settingsTab = new UITab("地图显示", BH::settingsUI);
 
-	new Texthook(settingsTab, 80, 3, "Toggles");
+	new Texthook(settingsTab, 80, 3, "设置开关");
 	unsigned int Y = 0;
 	int keyhook_x = 150;
 	int col2_x = 250;
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Auto Reveal"].state, "Auto Reveal");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Auto Reveal"].state, "自动全开地图");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Auto Reveal"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Monsters"].state, "Show Monsters");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Monsters"].state, "显示怪物图标");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Show Monsters"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Monster Enchantments"].state, "  Enchantments");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Monster Enchantments"].state, "  魔法(m/e)");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Monster Enchantments"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Monster Resistances"].state, "  Resistances");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Monster Resistances"].state, "  抗性(i)");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Monster Resistances"].toggle, "");
 	
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Missiles"].state, "Show Missiles");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Missiles"].state, "显示攻击轨迹");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Show Missiles"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Chests"].state, "Show Chests");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Chests"].state, "显示宝箱");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Show Chests"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Force Light Radius"].state, "Light Radius");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Force Light Radius"].state, "照亮范围全开");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Force Light Radius"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Remove Weather"].state, "Remove Weather");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Remove Weather"].state, "移除天气效果");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Remove Weather"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Infravision"].state, "Infravision");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Infravision"].state, "移除黑夜效果");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Infravision"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Remove Shake"].state, "Remove Shake");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Remove Shake"].state, "移除地震效果");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Remove Shake"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Display Level Names"].state, "Level Names");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Display Level Names"].state, "显示场景名称");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Display Level Names"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Apply CPU Patch"].state, "CPU Patch");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Apply CPU Patch"].state, "CPU 补丁");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Apply CPU Patch"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Apply FPS Patch"].state, "FPS Patch (SP Only)");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Apply FPS Patch"].state, "FPS 补丁 (仅单机)");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Apply FPS Patch"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Automap On Join"].state, "Show Automap On Join");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Show Automap On Join"].state, "进游戏就打开地图");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Show Automap On Join"].toggle, "");
 
-	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Skip NPC Quest Messages"].state, "Skip NPC Quest Messages");
+	new Checkhook(settingsTab, 4, (Y += 15), &Toggles["Skip NPC Quest Messages"].state, "跳过NPC任务对话");
 	new Keyhook(settingsTab, keyhook_x, (Y + 2), &Toggles["Skip NPC Quest Messages"].toggle, "");
 
 	new Texthook(settingsTab, col2_x + 5, 3, "Missile Colors");
 
-	new Colorhook(settingsTab, col2_x, 17, &missileColors["Player"], "Player");
-	new Colorhook(settingsTab, col2_x, 32, &missileColors["Neutral"], "Neutral");
-	new Colorhook(settingsTab, col2_x, 47, &missileColors["Party"], "Party");
-	new Colorhook(settingsTab, col2_x, 62, &missileColors["Hostile"], "Hostile");
+	new Colorhook(settingsTab, col2_x, 17, &missileColors["Player"], "玩家");
+	new Colorhook(settingsTab, col2_x, 32, &missileColors["Neutral"], "中立");
+	new Colorhook(settingsTab, col2_x, 47, &missileColors["Party"], "队友");
+	new Colorhook(settingsTab, col2_x, 62, &missileColors["Hostile"], "敌对");
 
 	new Texthook(settingsTab, col2_x + 5, 77, "Monster Colors");
 
-	new Colorhook(settingsTab, col2_x, 92, &monsterColors["Normal"], "Normal");
-	new Colorhook(settingsTab, col2_x, 107, &monsterColors["Minion"], "Minion");
-	new Colorhook(settingsTab, col2_x, 122, &monsterColors["Champion"], "Champion");
-	new Colorhook(settingsTab, col2_x, 137, &monsterColors["Boss"], "Boss");
+	new Colorhook(settingsTab, col2_x, 92, &monsterColors["Normal"], "普通");
+	new Colorhook(settingsTab, col2_x, 107, &monsterColors["Minion"], "喽啰");
+	new Colorhook(settingsTab, col2_x, 122, &monsterColors["Champion"], "精英");
+	new Colorhook(settingsTab, col2_x, 137, &monsterColors["Boss"], "大佬");
 
 	new Texthook(settingsTab, 6, (Y += 15), "Reveal Type:");
 
 	vector<string> options;
-	options.push_back("Game");
-	options.push_back("Act");
-	options.push_back("Level");
+	options.push_back("游戏");
+	options.push_back("章节");
+	options.push_back("场景");
 	new Combohook(settingsTab, 100, Y, 70, &revealType, options);
 
 }

@@ -148,7 +148,7 @@ void PrintText(DWORD Color, char *szText, ...) {
 }
 
 KeyCode pCodes[] = {
-	{"None", 0, "Not Set"},
+	{"None", 0, "Œ¥…Ë÷√"},
 	{"VK_BACK", 0x08, "Backspace"},
 	{"VK_TAB", 0x09, "Tab"},
 	{"VK_CLEAR", 0x0C, "Clear"},

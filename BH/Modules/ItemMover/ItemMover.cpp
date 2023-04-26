@@ -379,30 +379,29 @@ void ItemMover::OnLoad() {
 	LoadConfig();
 	Drawing::Texthook* colored_text;
 
-	settingsTab = new Drawing::UITab("Interaction", BH::settingsUI);
+	settingsTab = new Drawing::UITab("快捷说明", BH::settingsUI);
 
 	unsigned int x = 8;
 	unsigned int y = 7;
-	new Drawing::Texthook(settingsTab, x, y, "Keys (esc to clear)");
-	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpKey ,  "Quick Town Portal:     ");
-	new Drawing::Keyhook(settingsTab, x, (y += 15), &HealKey, "Use Healing Potion:    ");
-	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "Use Mana Potion:       ");
-	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "Use Rejuv Potion:      ");
+	new Drawing::Texthook(settingsTab, x, y, "鼠标点击可自定义快捷键 (按esc清除快捷键)");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpKey ,  "快速开门:     ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &HealKey, "喝红药:    ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
 
 	y += 7;
 
-	new Drawing::Texthook(settingsTab, x, (y += 15), "QoL features");
+	new Drawing::Texthook(settingsTab, x, (y += 15), "物品快速移动说明");
 	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),
-			"Shift-leftclick IDs an item if an ID tome is in inventory");
+			"Shift+左键 如果鉴定书在背包，就可以快速鉴定物品");
+	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),
+			"Shift+右键 在背包和打开的箱子（或打开的盒子）之间移动");
 	colored_text->SetColor(Gold);
 	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),
-			"Shift-rightclick moves between stash/open cube and inventory");
+			"Ctrl+右键 把物品扔地上");
 	colored_text->SetColor(Gold);
 	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),
-			"Ctrl-rightclick moves item to ground");
-	colored_text->SetColor(Gold);
-	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),
-			"Ctrl-shift-rightclick moves item into closed cube");
+			"Ctrl+shift+右键 移动物品到关闭着的盒子");
 	colored_text->SetColor(Gold);
 
 	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),

@@ -271,8 +271,8 @@ bool UI::OnLeftClick(bool up, unsigned int mouseX, unsigned int mouseY) {
 			{
 				SetDragged(false, true);
 				if(!up) {
-					PrintText(7, "CTRL-click to open settings" );
-					PrintText(7, "Shift-drag to move" );
+					PrintText(7, "CTRL+左键 打开设置(Settings)" );
+					PrintText(7, "Shift按住 移动这个设置按钮" );
 				}
 			}
 			return true;
@@ -292,7 +292,7 @@ bool UI::OnLeftClick(bool up, unsigned int mouseX, unsigned int mouseY) {
 			SetDragged(false, true);
 			if( startX == mouseX && startY == mouseY && GetAsyncKeyState(VK_CONTROL) )
 			{
-				PrintText(135, "Right Click to Close" );
+				PrintText(135, "右键关闭设置(Settings)");
 			}
 		}
 		SetActive(true);

@@ -18,31 +18,31 @@ void AutoTele::OnLoad() {
 	std::map<string, bool>* bnetBools (BH::BnetBools);
 	std::map<string, bool>* gamefilterBools(BH::GamefilterBools);
 
-	settingsTab = new UITab("Misc", BH::settingsUI);
+	settingsTab = new UITab("杂项", BH::settingsUI);
 	unsigned int Y = 12;
 	unsigned int col = 40;
 
-	new Texthook(settingsTab, col+20, Y, "Toggles");
+	new Texthook(settingsTab, col+20, Y, "开关");
 
 	new Checkhook(settingsTab, col, (Y += 15),
-			&Toggles["Draw Destination"].state, "Draw Paths");
+			&Toggles["Draw Destination"].state, "引导线");
 
 	new Checkhook(settingsTab, col, (Y += 15),
-			&Toggles["Quest Drop Warning"].state, "Quest Drop Warning");
+			&Toggles["Quest Drop Warning"].state, "任务物品掉落提醒");
 
-	new Texthook(settingsTab, col+20, (Y += 22), "Game creation");
+	new Texthook(settingsTab, col+20, (Y += 22), "创建游戏");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*bnetBools)["Autofill Last Game"], "Autofill Last Game");
+			&(*bnetBools)["Autofill Last Game"], "自动填充游戏名");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*bnetBools)["Autofill Next Game"], "Autofill Next Game");
+			&(*bnetBools)["Autofill Next Game"], "下一个游戏+1");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*bnetBools)["Autofill Last Password"], "Autofill Last Password");
+			&(*bnetBools)["Autofill Last Password"], "自动填充游戏密码");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*bnetBools)["Autofill Description"], "Autofill Description");
+			&(*bnetBools)["Autofill Description"], "自动填充游戏说明");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*gamefilterBools)["Show Difficulty"], "Show Difficulty");
+			&(*gamefilterBools)["Show Difficulty"], "显示难度");
 	new Checkhook(settingsTab, col, (Y += 15),
-			&(*gamefilterBools)["Show Gameserver"], "Show Gameserver");
+			&(*gamefilterBools)["Show Gameserver"], "显示服务器");
 
 	//this doesn't change the path.  I can't figure out how to make it work either.
 	//new Checkhook(settingsTab, 40, 42, &Toggles["CP to cave"].state, "CP to cave");
@@ -51,15 +51,15 @@ void AutoTele::OnLoad() {
 
 	new Colorhook(settingsTab, 250, 27, &Colors[0], "Path");
 
-	new Colorhook(settingsTab, 250, 42, &Colors[1], "Next");
+	new Colorhook(settingsTab, 250, 42, &Colors[1], "下一场经");
 
-	new Colorhook(settingsTab, 250, 57, &Colors[2], "Other");
+	new Colorhook(settingsTab, 250, 57, &Colors[2], "入口");
 
-	new Colorhook(settingsTab, 250, 72, &Colors[3], "WP");
+	new Colorhook(settingsTab, 250, 72, &Colors[3], "小站");
 
-	new Colorhook(settingsTab, 250, 87, &Colors[4], "Prev");
+	new Colorhook(settingsTab, 250, 87, &Colors[4], "上一场景");
 
-	new Colorhook(settingsTab, 250, 102, &Colors[5], "Other Extra");
+	new Colorhook(settingsTab, 250, 102, &Colors[5], "其他入口");
 }
 
 void AutoTele::LoadConfig() {
