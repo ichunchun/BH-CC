@@ -94,7 +94,7 @@ DWORD WINAPI LoadMPQData(VOID* lpvoid){
 void BH::Initialize()
 {
 	moduleManager = new ModuleManager();
-	config = new Config("BH_settings.cfg");
+	config = new Config("BH_settings.cfg"); //可修改为自己喜欢的xxx.cfg
 	if(!config->Parse()) {
 		config->SetConfigName("BH_Default.cfg");
 		if(!config->Parse()) {
@@ -104,7 +104,7 @@ void BH::Initialize()
 			MessageBox(NULL, msg.c_str(), "Failed to load BH config", MB_OK);
 		}
 	}
-	itemConfig = new Config("BH.cfg");
+	itemConfig = new Config("BH.cfg"); //BH.CFG名字和位置
 	itemConfig->Parse();
 
 	// Do this asynchronously because D2GFX_GetHwnd() will be null if

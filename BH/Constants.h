@@ -1,6 +1,6 @@
 #pragma once
 
-#define VERSION "BH 1.9.10-b3.1"
+#define VERSION "BH 1.9.10-b3.1" //更改游戏内小条条名字
 
 #ifdef SHA
 #define BH_VERSION VERSION "." SHA
