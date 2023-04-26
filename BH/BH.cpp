@@ -137,7 +137,7 @@ void BH::Initialize()
 	new AutoTele();
 	new Party();
 	new ItemMover();
-	new StashExport();
+	//new StashExport(); ÒÆ³ýµ¼³öÒ³Ãæ
 	new Maphack();
 	new ChatColor();
 
