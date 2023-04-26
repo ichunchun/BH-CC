@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../D2Structs.h"
 #include "../../Drawing.h"
 #include "../Module.h"
@@ -37,7 +37,8 @@ struct ItemPacketData {
 class ItemMover : public Module {
 private:
 	bool FirstInit;
-	bool AutoBackTown;  //�Զ��سǵĿ���
+	bool AutoBackTown;  //自动回城的开关
+	bool QuickExitGame;  //一键快速退出
 	int *InventoryItemIds;
 	int *StashItemIds;
 	int *LODStashItemIds;
@@ -49,6 +50,7 @@ private:
 	InventoryLayout *cubeLayout;
 	unsigned int TpKey;
 	unsigned int TpBackKey;
+	unsigned int ExitGameKey;
 	unsigned int HealKey;
 	unsigned int ManaKey;
 	unsigned int JuvKey;

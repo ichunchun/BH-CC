@@ -369,6 +369,7 @@ void ItemMover::OnRightClick(bool up, unsigned int x, unsigned int y, bool* bloc
 void ItemMover::LoadConfig() {
 	BH::config->ReadKey("Use TP Tome", "VK_NUMPADADD", TpKey);
 	BH::config->ReadKey("Use TP Tome Back", "VK_BACK", TpBackKey);
+	BH::config->ReadKey("One Key Exit Game", "VK_NUMPADSUB", ExitGameKey);
 	BH::config->ReadKey("Use Healing Potion", "VK_NUMPADMULTIPLY", HealKey);
 	BH::config->ReadKey("Use Mana Potion", "VK_NUMPADSUBTRACT", ManaKey);
 	BH::config->ReadKey("Use Rejuv Potion", "VK_NUMPADDIVIDE", JuvKey);
@@ -387,6 +388,7 @@ void ItemMover::OnLoad() {
 	new Drawing::Texthook(settingsTab, x, y, "鼠标点击可自定义快捷键 (按esc清除快捷键)");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpKey ,  "快速开门:     ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpBackKey, "快速回城:       ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &ExitGameKey, "一键退出:     ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &HealKey, "喝红药:    ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
@@ -485,6 +487,11 @@ void ItemMover::OnKey(bool up, BYTE key, LPARAM lParam, bool* block)  {
 			D2NET_SendPacket(13, 0, PacketData);
 			*block = true;
 		}
+	}
+	if (!up && key == ExitGameKey) {
+		*p_D2CLIENT_ExitAppFlag = 0;
+		SendMessage(D2GFX_GetHwnd(), WM_CLOSE, 0, 0);
+		*block = true;
 	}
 }
 
