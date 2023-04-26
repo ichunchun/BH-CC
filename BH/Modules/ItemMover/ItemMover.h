@@ -37,6 +37,7 @@ struct ItemPacketData {
 class ItemMover : public Module {
 private:
 	bool FirstInit;
+	bool AutoBackTown;  //自动回城的开关
 	int *InventoryItemIds;
 	int *StashItemIds;
 	int *LODStashItemIds;
@@ -47,6 +48,7 @@ private:
 	InventoryLayout *inventoryLayout;
 	InventoryLayout *cubeLayout;
 	unsigned int TpKey;
+	unsigned int TpBackKey;
 	unsigned int HealKey;
 	unsigned int ManaKey;
 	unsigned int JuvKey;

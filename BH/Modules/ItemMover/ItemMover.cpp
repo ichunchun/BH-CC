@@ -368,6 +368,7 @@ void ItemMover::OnRightClick(bool up, unsigned int x, unsigned int y, bool* bloc
 
 void ItemMover::LoadConfig() {
 	BH::config->ReadKey("Use TP Tome", "VK_NUMPADADD", TpKey);
+	BH::config->ReadKey("Use TP Tome Back", "VK_BACK", TpBackKey);
 	BH::config->ReadKey("Use Healing Potion", "VK_NUMPADMULTIPLY", HealKey);
 	BH::config->ReadKey("Use Mana Potion", "VK_NUMPADSUBTRACT", ManaKey);
 	BH::config->ReadKey("Use Rejuv Potion", "VK_NUMPADDIVIDE", JuvKey);
@@ -385,6 +386,7 @@ void ItemMover::OnLoad() {
 	unsigned int y = 7;
 	new Drawing::Texthook(settingsTab, x, y, "鼠标点击可自定义快捷键 (按esc清除快捷键)");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpKey ,  "快速开门:     ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &TpBackKey, "快速回城:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &HealKey, "喝红药:    ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
@@ -616,6 +618,16 @@ void ItemMover::OnGamePacketRecv(BYTE* packet, bool* block) {
 			}
 			break;
 		}
+	case 0x60:  //by zyl 自动回城
+	{
+		if (!AutoBackTown) return;   //不自动回城就直接返回
+		if (packet[1] == 0x00) { //00限定只能走通向城里的传送门
+			BYTE castMove[9] = { 0x13 };
+			*(DWORD*)&castMove[1] = 2;
+			*(DWORD*)&castMove[5] = *(DWORD*)&packet[3]; // portal ID
+			D2NET_SendPacket(sizeof(castMove), 0, castMove);
+		}
+	}
 	default:
 		break;
 	}
