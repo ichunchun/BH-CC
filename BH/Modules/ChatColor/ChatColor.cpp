@@ -3,6 +3,11 @@
 #include "../../D2Ptrs.h"
 #include "../../D2Stubs.h"
 
+
+
+Patch* UnicodeSupport2 = new Patch(Jump, D2LANG, { 0x8320, 0x82E0 }, (DWORD)D2Lang_Win2UnicodePatch, 5);
+//{PatchJMP,    DLLOFFSET2(D2LANG, 0x6FC08320, 0x6FC082E0),      (DWORD)D2Lang_Win2UnicodePatch,          5 ,   &fLocalizationSupport},
+
 void ChatColor::Init() {
 	
 }
@@ -32,7 +37,12 @@ void ChatColor::OnGameExit() {
 }
 
 void ChatColor::OnLoad() {
+	UnicodeSupport2->Install();
 	LoadConfig();
+
+}void ChatColor::OnUnload()
+{
+	UnicodeSupport2->Remove();
 }
 
 void ChatColor::LoadConfig() {
@@ -40,6 +50,46 @@ void ChatColor::LoadConfig() {
 
 	BH::config->ReadAssoc("Whisper Color", whisperColors);
 }
+
+LPCSTR __fastcall D2Lang_Unicode2WinPatch(LPSTR lpWinStr, LPWSTR lpUnicodeStr, DWORD dwBufSize)
+{
+	WideCharToMultiByte(CP_ACP, 0, lpUnicodeStr, -1, lpWinStr, dwBufSize, NULL, NULL);
+	return lpWinStr;
+}
+
+void UnicodeFix2(LPWSTR lpText)
+{
+	if (lpText) {
+		size_t LEN = wcslen(lpText);
+		for (size_t i = 0; i < LEN; i++)
+		{
+			if (lpText[i] == 0xf8f5) // Unicode 'y'
+				lpText[i] = 0xff; // Ansi 'y'
+		}
+	}
+}
+
+int MyMultiByteToWideChar(
+	UINT CodePage,         // code page
+	DWORD dwFlags,         // character-type options
+	LPCSTR lpMultiByteStr, // string to map
+	int cbMultiByte,       // number of bytes in string
+	LPWSTR lpWideCharStr,  // wide-character buffer
+	int cchWideChar        // size of buffer
+)
+{
+	int r = MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, lpWideCharStr, cchWideChar);
+	UnicodeFix2(lpWideCharStr);
+	return r;
+}
+
+LPWSTR __fastcall D2Lang_Win2UnicodePatch(LPWSTR lpUnicodeStr, LPCSTR lpWinStr, DWORD dwBufSize)
+{
+	MyMultiByteToWideChar(CP_ACP, 0, lpWinStr, -1, lpUnicodeStr, dwBufSize);
+	return lpUnicodeStr;
+}
+
+
 
 void ChatColor::UpdateInGame() {
 	if ((*p_D2WIN_FirstControl) && inGame) inGame = false;
