@@ -3,8 +3,6 @@
 #include "../../D2Ptrs.h"
 #include "../../D2Stubs.h"
 
-
-
 Patch* UnicodeSupport2 = new Patch(Jump, D2LANG, { 0x8320, 0x82E0 }, (DWORD)D2Lang_Win2UnicodePatch, 5);
 //{PatchJMP,    DLLOFFSET2(D2LANG, 0x6FC08320, 0x6FC082E0),      (DWORD)D2Lang_Win2UnicodePatch,          5 ,   &fLocalizationSupport},
 
@@ -88,7 +86,6 @@ LPWSTR __fastcall D2Lang_Win2UnicodePatch(LPWSTR lpUnicodeStr, LPCSTR lpWinStr, 
 	MyMultiByteToWideChar(CP_ACP, 0, lpWinStr, -1, lpUnicodeStr, dwBufSize);
 	return lpUnicodeStr;
 }
-
 
 
 void ChatColor::UpdateInGame() {
