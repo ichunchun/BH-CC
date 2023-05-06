@@ -316,7 +316,7 @@ void ItemMover::OnLeftClick(bool up, unsigned int x, unsigned int y, bool* block
 				}
 			}
 		}
-		if (code[0] == 'i' && code[1] == 'b' && code[2] == 'k' && pItem->pItemData->ItemLocation == STORAGE_INVENTORY && D2COMMON_GetUnitStat(pItem, STAT_AMMOQUANTITY, 0)>0) {
+		if (code[0] == 'i' && code[1] == 'b' && code[2] == 'k' && (pItem->pItemData->ItemLocation == STORAGE_INVENTORY || pItem->pItemData->ItemLocation == STORAGE_CUBE || pItem->pItemData->ItemLocation == STORAGE_STASH) && D2COMMON_GetUnitStat(pItem, STAT_AMMOQUANTITY, 0)>0) {
 			idBookId = pItem->dwUnitId;
 		}
 		if (unidItemId > 0 && idBookId > 0) {
@@ -461,11 +461,15 @@ void ItemMover::OnKey(bool up, BYTE key, LPARAM lParam, bool* block)  {
 			*block = true;
 		}
 	}
-	if (!up && (key == TpKey)) {
+	if (!up && (key == TpKey || key == TpBackKey)) {
+		AutoBackTown = false;
+		if (key == TpBackKey) {
+			AutoBackTown = true;
+		}
 		DWORD tpId = 0;
 		int tp_quantity = 0;
 		for (UnitAny *pItem = unit->pInventory->pFirstItem; pItem; pItem = pItem->pItemData->pNextInvItem) {
-			if (pItem->pItemData->ItemLocation == STORAGE_INVENTORY) {
+			if (pItem->pItemData->ItemLocation == STORAGE_INVENTORY || pItem->pItemData->ItemLocation == STORAGE_CUBE || pItem->pItemData->ItemLocation == STORAGE_STASH) {
 				char* code = D2COMMON_GetItemText(pItem->dwTxtFileNo)->szCode;
 				if (code[0] == 't' && code[1] == 'b' && code[2] =='k') {
 					tp_quantity = D2COMMON_GetUnitStat(pItem, STAT_AMMOQUANTITY, 0);
