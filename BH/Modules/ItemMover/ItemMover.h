@@ -54,6 +54,7 @@ private:
 	unsigned int HealKey;
 	unsigned int ManaKey;
 	unsigned int JuvKey;
+	unsigned int BeltKey;
 	ItemPacketData ActivePacket;
 	CRITICAL_SECTION crit;
 	Drawing::UITab* settingsTab;
@@ -103,6 +104,7 @@ public:
 	void PickUpItem();
 	void PutItemInContainer();
 	void PutItemOnGround();
+	void AutoToBelt();  //自动填充腰带
 
 	void LoadConfig();
 

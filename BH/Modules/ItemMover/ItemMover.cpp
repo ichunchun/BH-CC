@@ -6,6 +6,7 @@
 #include "../../D2Helpers.h"
 #include "../ScreenInfo/ScreenInfo.h"
 
+
 // This module was inspired by the RedVex plugin "Item Mover", written by kaiks.
 // Thanks to kaiks for sharing his code.
 
@@ -272,6 +273,53 @@ void ItemMover::PutItemOnGround() {
 	D2NET_SendPacket(5, 1, PacketData);
 }
 
+void ItemMover::AutoToBelt()
+{
+	UnitAny* unit = D2CLIENT_GetPlayerUnit();
+	if (!unit)
+		return;
+
+	/*UnitAny* test1 = D2COMMON_GetBeltItem(unit->pInventory, 0);
+	DWORD test2 = D2COMMON_GetFreeBeltSlot(unit->pInventory,test1, 0);*/
+
+	//"hp", "mp", "rv"
+		//循环查找背包里面的药
+	for (UnitAny* pItem = unit->pInventory->pFirstItem; pItem; pItem = pItem->pItemData->pNextInvItem) {
+		if (pItem->pItemData->ItemLocation == STORAGE_INVENTORY || pItem->pItemData->ItemLocation == STORAGE_CUBE) {   //只取背包和盒子里面的
+			char* code = D2COMMON_GetItemText(pItem->dwTxtFileNo)->szCode;
+			if (code[0] == 'h' && code[1] == 'p') {
+				DWORD itemId = pItem->dwUnitId;  //红药
+				//试一下这个不知道是不是填充的数据包
+				BYTE PacketData[5] = { 0x63, 0, 0, 0, 0 };
+				*reinterpret_cast<int*>(PacketData + 1) = itemId;
+				D2NET_SendPacket(5, 0, PacketData);
+			}
+			if (code[0] == 'm' && code[1] == 'p') {
+				DWORD itemId = pItem->dwUnitId;  //蓝药
+				//试一下这个不知道是不是填充的数据包
+				BYTE PacketData[5] = { 0x63, 0, 0, 0, 0 };
+				*reinterpret_cast<int*>(PacketData + 1) = itemId;
+				D2NET_SendPacket(5, 0, PacketData);
+			}
+			if (code[0] == 'r' && code[1] == 'v') {
+				DWORD itemId = pItem->dwUnitId;  //紫药
+				//试一下这个不知道是不是填充的数据包
+				BYTE PacketData[5] = { 0x63, 0, 0, 0, 0 };
+				*reinterpret_cast<int*>(PacketData + 1) = itemId;
+				D2NET_SendPacket(5, 0, PacketData);
+			}
+			if (code[0] == 'y' && code[1] == 'p' && code[2] == 's') {
+				DWORD itemId = pItem->dwUnitId;  //解毒药
+				//试一下这个不知道是不是填充的数据包
+				BYTE PacketData[5] = { 0x63, 0, 0, 0, 0 };
+				*reinterpret_cast<int*>(PacketData + 1) = itemId;
+				D2NET_SendPacket(5, 0, PacketData);
+			}
+		}
+	}
+}
+
+
 void ItemMover::OnLeftClick(bool up, unsigned int x, unsigned int y, bool* block) {
 	UnitAny *unit = D2CLIENT_GetPlayerUnit();
 	bool shiftState = ((GetKeyState(VK_LSHIFT) & 0x80) || (GetKeyState(VK_RSHIFT) & 0x80));
@@ -392,7 +440,7 @@ void ItemMover::OnLoad() {
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &HealKey, "喝红药:    ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
-
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &BeltKey, "填充腰带:       ");
 	y += 7;
 
 	new Drawing::Texthook(settingsTab, x, (y += 15), "物品快速移动说明");
@@ -496,6 +544,9 @@ void ItemMover::OnKey(bool up, BYTE key, LPARAM lParam, bool* block)  {
 		*p_D2CLIENT_ExitAppFlag = 0;
 		SendMessage(D2GFX_GetHwnd(), WM_CLOSE, 0, 0);
 		*block = true;
+	}
+	if (!up && key == BeltKey) {  //自动填充腰带
+		AutoToBelt();
 	}
 }
 
