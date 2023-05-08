@@ -1564,7 +1564,7 @@ bool ChargedCondition::EvaluateInternalFromPacket(ItemInfo *info, Condition *arg
 	for (vector<ItemProperty>::iterator prop = info->properties.begin(); prop < info->properties.end(); prop++) {
 		if (prop->stat == STAT_CHARGED && prop->skill == skill) {
 			num = (prop->level > num) ? prop->level : num; // use the highest level charges for the comparison
-			PrintText(1, "Found charged skill. skill=%u level=%u", prop->skill, prop->level);
+			//PrintText(1, "Found charged skill. skill=%u level=%u", prop->skill, prop->level);
 		}
 	}
 	return IntegerCompare(num, operation, targetLevel);
