@@ -65,6 +65,17 @@ bool BH::Startup(HINSTANCE instance, VOID* reserved) {
 		cGuardLoaded = false;
 	}
 
+	string cLine = GetCommandLine();
+	//PD2技能修复D2Glide.dll S7开始可能不用修复了
+	/*00007854    7E 62           jle short 000078B8*/
+	HMODULE hModule = GetModuleHandle("D2Glide.dll");
+	int glide3x = cLine.find("-3dfx");  //开启d2dx时
+	if (hModule && glide3x > 0)
+	{
+		int patchAddr11 = Patch::GetDllOffset(D2GLIDE, 0x7854);
+		BYTE patchBytes11[1] = { 0xEB };
+		Patch::WriteBytes(patchAddr11, 1, patchBytes11);
+	}
 
 	initialized = false;
 	Initialize();
