@@ -5,7 +5,8 @@
 #include "../../D2Stubs.h"
 #include "../../D2Helpers.h"
 #include "../ScreenInfo/ScreenInfo.h"
-
+#include "../ChatColor/ChatColor.h"
+using namespace Drawing;
 
 // This module was inspired by the RedVex plugin "Item Mover", written by kaiks.
 // Thanks to kaiks for sharing his code.
@@ -441,7 +442,12 @@ void ItemMover::OnLoad() {
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &BeltKey, "填充腰带:       ");
-	y += 7;
+	int keyhook_x = 150;
+	new Checkhook(settingsTab, 4, (y += 15), &ChatColor::Toggles["Merc Protect"].state, "佣兵保护");
+	new Keyhook(settingsTab, keyhook_x, (y + 2), &ChatColor::Toggles["Merc Protect"].toggle, "");
+	new Checkhook(settingsTab, 4, (y += 15), &ChatColor::Toggles["Merc Boring"].state, "佣兵吐槽");
+	new Keyhook(settingsTab, keyhook_x, (y + 2), &ChatColor::Toggles["Merc Boring"].toggle, "");
+	y += 15;
 
 	new Drawing::Texthook(settingsTab, x, (y += 15), "物品快速移动说明");
 	colored_text = new Drawing::Texthook(settingsTab, x, (y += 15),

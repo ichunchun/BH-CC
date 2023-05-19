@@ -7,6 +7,7 @@
 #include "../../BitReader.h"
 #include "../Item/ItemDisplay.h"
 #include "../../MPQInit.h"
+#include "../../Task.h"
 
 extern int INVENTORY_WIDTH;
 extern int INVENTORY_HEIGHT;
@@ -58,6 +59,7 @@ private:
 	ItemPacketData ActivePacket;
 	CRITICAL_SECTION crit;
 	Drawing::UITab* settingsTab;
+	map<std::string, Toggle> Toggles;
 public:
 	ItemMover() : Module("Item Mover"),
 		ActivePacket(),
