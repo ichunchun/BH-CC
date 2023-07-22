@@ -424,6 +424,7 @@ void ItemMover::LoadConfig() {
 	BH::config->ReadKey("Use Rejuv Potion", "VK_NUMPADDIVIDE", JuvKey);
 	BH::config->ReadKey("One Key Fill Belt", "VK_SHIFT", BeltKey);
 	BH::config->ReadInt("Low TP Warning", tp_warn_quantity);
+	BH::config->ReadKey("Use Auto Pickup", "VK_U", AutoPickupKey);
 }
 
 void ItemMover::OnLoad() {
@@ -442,6 +443,7 @@ void ItemMover::OnLoad() {
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &ManaKey, "喝蓝药:       ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &JuvKey,  "喝紫药:      ");
 	new Drawing::Keyhook(settingsTab, x, (y += 15), &BeltKey, "填充腰带:       ");
+	new Drawing::Keyhook(settingsTab, x, (y += 15), &AutoPickupKey, "自动拾取:       ");
 	int keyhook_x = 150;
 	new Checkhook(settingsTab, 4, (y += 15), &ChatColor::Toggles["Merc Protect"].state, "佣兵保护");
 	new Keyhook(settingsTab, keyhook_x, (y + 2), &ChatColor::Toggles["Merc Protect"].toggle, "");
@@ -556,6 +558,11 @@ void ItemMover::OnKey(bool up, BYTE key, LPARAM lParam, bool* block)  {
 	}
 	if (!up && key == BeltKey) {  //自动填充腰带
 		AutoToBelt();
+	}
+	if (!up && (key == AutoPickupKey))
+	{
+		AutoPickupOn = !AutoPickupOn;
+		PrintText(Blue, "自动拾取金币%s.", AutoPickupOn ? "开启" : "关闭");
 	}
 }
 
@@ -1147,4 +1154,68 @@ bool ProcessStat(unsigned int stat, BitReader &reader, ItemProperty &itemProp) {
 			return true;
 		}
 	}
+}
+
+//自动拾取代码
+// 按帧数计算，具体时间不是很准确
+#define CHARGING_CD 100
+#define AUTO_PICKUP_GOLD_RANGE 5
+DWORD GetDistance(LONG x1, LONG y1, LONG x2, LONG y2)
+{
+	return (DWORD)::sqrt((double)(((int)x1 - (int)x2) * ((int)x1 - (int)x2) + ((int)y1 - (int)y2) * ((int)y1 - (int)y2)));
+}
+
+DWORD GetItemMapDistanceFrom(UnitAny* player, UnitAny* item) // Player's distance from a position
+{
+	return GetDistance(player->pPath->xPos, player->pPath->yPos, item->pItemPath->dwPosX, item->pItemPath->dwPosY);
+}
+
+void ItemMover::OnLoop()
+{
+	AutoPickupGold(AUTO_PICKUP_GOLD_RANGE);
+}
+
+void ItemMover::AutoPickupGold(DWORD range)
+{
+	if (!AutoPickupOn)
+		return;
+	UnitAny* unit = D2CLIENT_GetPlayerUnit();
+	DWORD max_gold_amount = D2COMMON_GetUnitStat(unit, STAT_LEVEL, 0) * 10000;
+	DWORD goldstash = D2COMMON_GetUnitStat(unit, STAT_GOLD, 0);
+	if (goldstash >= max_gold_amount)
+		return;
+
+	Room1* room1 = unit->pPath->pRoom1;
+	if (!room1 || !room1->pRoom2)
+		return;
+	for (DWORD i = 0; i < room1->dwRoomsNear; i++)
+	{
+		for (UnitAny* pUnit = room1->pRoomsNear[i]->pUnitFirst; pUnit; pUnit = pUnit->pListNext)
+		{
+			if (pUnit && pUnit->dwType == UNIT_ITEM)
+			{
+				char* code = D2COMMON_GetItemText(pUnit->dwTxtFileNo)->szCode;
+				std::string szCode;
+				DWORD dis = GetItemMapDistanceFrom(unit, pUnit);
+				if (Auto_toPickupItems.find(szCode) != Auto_toPickupItems.end() && dis < range)
+				{
+					BYTE aPacket[13] = { 0 };
+					aPacket[0] = 0x16;
+					aPacket[1] = 0x04;
+					aPacket[12] = 0;
+					::memcpy(aPacket + 5, &pUnit->dwUnitId, 4);
+					D2NET_SendPacket(13, 0, aPacket);
+				}
+			}
+		}
+	}
+}
+
+void ItemMover::ResetPacket()
+{
+	ActivePacket.itemId = 0;
+	ActivePacket.x = 0;
+	ActivePacket.y = 0;
+	ActivePacket.startTicks = 0;
+	ActivePacket.destination = 0;
 }
