@@ -1196,6 +1196,9 @@ void ItemMover::AutoPickupGold(DWORD range)
 			{
 				char* code = D2COMMON_GetItemText(pUnit->dwTxtFileNo)->szCode;
 				std::string szCode;
+				szCode += code[0];
+				szCode += code[1];
+				szCode += code[2];
 				DWORD dis = GetItemMapDistanceFrom(unit, pUnit);
 				if (Auto_toPickupItems.find(szCode) != Auto_toPickupItems.end() && dis < range)
 				{
