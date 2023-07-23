@@ -77,9 +77,21 @@ public:
 		inventoryLayout(NULL),
 		cubeLayout(NULL),
 		AutoPickupOn(true),
-		tp_warn_quantity(3){
+		tp_warn_quantity(3),
+		Auto_toPickupItems({
+	"gld",  "gzv","glw", "leg",			//  Flawless-Amethyst, Flawless-Diamond
+	"glg", "glr", "glb", "skl", "gly",	// Flawless-Emerald, Flawless-Ruby, Flawless-Saphire, Flawless-Skull, Flawless-Topaz
+	"gpw", "gpv", "gpb", "gpy", "gpr",	// Perfect-Diamond, Perfect-Amethyst, Perfect-Sapphire, Perfect-Topaz, Perfect-Ruby
+	"skz", "gpg", "r03", "r07", "r08",	// Perfect-Skull, Perfect-Emerald, Rune7, Rune8, Rune9			// Rune10, Rune11, Rune12, Rune15
+	"r09", "r10", "r11", "r12", "r15", 
+	"r20", "r21", "r22", "r23", "rvl",
+	"r24", "r25", "r26", "r27", "r28",
+	"r29", "r30", "r31", "r32", "r33",
+	"pk1", "pk2", "pk3", "tes", "ceh",
+	"bet", "fed", "toa", 
+			}){
 		InitializeCriticalSection(&crit);
-		LoadAutoPickupItemsFromConfig("BH/auto_pickup_items.cfg");
+		//LoadAutoPickupItemsFromConfig("BH/auto_pickup_items.cfg"); //和下面的void LoadAutoPickupItemsFromConfig(const std::string& filename) 可以组成读取cfg拾取
 	};
 	~ItemMover() {
 		if (InventoryItemIds) {
@@ -125,30 +137,30 @@ public:
 private:
 	void AutoPickupGold(DWORD range);
 	void ResetPacket();
-	void LoadAutoPickupItemsFromConfig(const std::string& filename) {
-		std::ifstream inputFile(filename);
-		if (inputFile.is_open()) {
-			std::string line;
-			while (std::getline(inputFile, line)) {
-				// 使用字符串流分割一行中的多个物品名
-				std::istringstream iss(line);
-				std::string item;
-				while (std::getline(iss, item, ',')) {
-					// 去掉字符串前后的空格
-					size_t start = item.find_first_not_of(" \t");
-					size_t end = item.find_last_not_of(" \t");
-					if (start != std::string::npos && end != std::string::npos) {
-						item = item.substr(start, end - start + 1);
-					}
-					Auto_toPickupItems.insert(item);
-				}
-			}
-			inputFile.close();
-		}
-		else {
-			std::cout << "Unable to open the file " << filename << std::endl;
-		}
-	}
+	//void LoadAutoPickupItemsFromConfig(const std::string& filename) {
+	//	std::ifstream inputFile(filename);
+	//	if (inputFile.is_open()) {
+	//		std::string line;
+	//		while (std::getline(inputFile, line)) {
+	//			// 使用字符串流分割一行中的多个物品名
+	//			std::istringstream iss(line);
+	//			std::string item;
+	//			while (std::getline(iss, item, ',')) {
+	//				// 去掉字符串前后的空格
+	//				size_t start = item.find_first_not_of(" \t");
+	//				size_t end = item.find_last_not_of(" \t");
+	//				if (start != std::string::npos && end != std::string::npos) {
+	//					item = item.substr(start, end - start + 1);
+	//				}
+	//				Auto_toPickupItems.insert(item);
+	//			}
+	//		}
+	//		inputFile.close();
+	//	}
+	//	else {
+	//		std::cout << "Unable to open the file " << filename << std::endl;
+	//	}
+	//}
 };
 
 
