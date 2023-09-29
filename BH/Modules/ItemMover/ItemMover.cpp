@@ -476,7 +476,7 @@ void ItemMover::OnKey(bool up, BYTE key, LPARAM lParam, bool* block)  {
 		return;
 
 	bool shiftState = ((GetKeyState(VK_LSHIFT) & 0x80) || (GetKeyState(VK_RSHIFT) & 0x80));
-	//if (shiftState) return;  //按了shift就不处理,继续走下去,主要用于佣兵喝药
+	if (shiftState) return;  //按了shift就不处理,继续走下去,主要用于佣兵喝药
 
 	if (!up && (key == HealKey || key == ManaKey || key == JuvKey)) {
 		int idx = key == JuvKey ? 2 : key == ManaKey ? 1 : 0;
